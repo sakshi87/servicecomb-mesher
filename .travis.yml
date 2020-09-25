@@ -1,8 +1,6 @@
 language: go
 sudo: required
-arch: 
-  - amd64
-  - arm64
+
 go:
   - 1.14.2
 install: true
@@ -24,38 +22,65 @@ jobs:
   include:
     - stage: Format Checker
       script: bash -x scripts/travis/formatChecker.sh
+      arch: 
+        - amd64
+        - arm64
     - stage: DeadCode Checker
       script:
         - go get -u github.com/tsenart/deadcode
         - bash -x scripts/travis/deadCodeChecker.sh
+      arch: 
+        - amd64
+        - arm64
     - stage: Misspell Checker
       script:
         - go get -u github.com/client9/misspell
         - bash -x scripts/travis/misspellChecker.sh
+      arch: 
+        - amd64
+        - arm64
     - stage: GoConst Checker
       script:
         - go get -u github.com/jgautheron/goconst/cmd/goconst
         - bash -x scripts/travis/goConstChecker.sh
+      arch: 
+        - amd64
+        - arm64
     - stage: GoLint Checker
       script:
         - go get -u golang.org/x/lint/golint
         - bash -x scripts/travis/goLintChecker.sh
+      arch: 
+        - amd64
+        - arm64
     - stage: GoCyclo Checker
       script:
         - go get github.com/fzipp/gocyclo
         - bash -x scripts/travis/goCycloChecker.sh
+      arch: 
+        - amd64
+        - arm64
     - stage: GoSecure Checker
       script:
         - go get github.com/securego/gosec/cmd/gosec
         - bash -x scripts/travis/goSecureChecker.sh
+      arch: 
+        - amd64
+        - arm64
     - stage: Build
       script: 
         - GO111MODULE=on go mod download
         - go build github.com/apache/servicecomb-mesher/cmd/mesher
+      arch: 
+        - amd64
+        - arm64
     - stage: Unit Test
       script:
         - go get github.com/mattn/goveralls
         - go get golang.org/x/tools/cmd/cover
         - GO111MODULE=on go mod download
         - bash -x scripts/travis/unit_test.sh && $HOME/gopath/bin/goveralls -coverprofile=coverage.txt -service=travis-ci
+      arch: 
+        - amd64
+        - arm64
 
